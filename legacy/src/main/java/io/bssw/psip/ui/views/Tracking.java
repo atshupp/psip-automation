@@ -79,7 +79,7 @@ public class Tracking extends ViewFrame  implements HasUrlParameter<String> {
 		mainLayout = new VerticalLayout();
 		mainLayout.setMargin(false);
 		mainLayout.setHeightFull();
-		FlexBoxLayout content = new FlexBoxLayout(new VerticalLayout(description), mainLayout);
+		FlexBoxLayout content = new FlexBoxLayout(mainLayout);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO);
 		content.setMaxWidth("840px");

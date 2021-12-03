@@ -33,6 +33,7 @@ package io.bssw.psip.ui.views;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.olli.ClipboardHelper;
@@ -190,9 +191,36 @@ public class Assessment extends ViewFrame implements HasUrlParameter<String> {
 		startAnchor.setText("Click here to start assessing your practices.");
 		startAnchor.getElement().addEventListener("click", e -> MainLayout.navigate(Assessment.class, activity.getCategories().get(0).getPath()));
 
-		Component summary = createActivitySummary(activity);
-		
-		mainLayout.add(div, startAnchor, summary);
+		ApexCharts summary = createActivitySummary(activity);
+		AtomicBoolean hasInput = new AtomicBoolean(false);
+		activity.getCategories().forEach(c -> {
+					if (!c.getItems().isEmpty()) {
+						for (Item item : c.getItems()) {
+							if (item.getScore().isPresent()) {
+								int score = item.getScore().get();
+								if(score > 0) {
+									hasInput.set(true);
+									break;
+								}
+							}
+						}
+					}
+				});
+		if(hasInput.get()) {
+			Button btn1 = new Button("Suggest a Goal", click -> MainLayout.navigate(Tracking.class, "suggestions"));
+			Button btn2 = new Button("Custom Goal", click -> MainLayout.navigate(Tracking.class, "PTCCreator"));
+			btn1.setHeightFull();
+			btn1.setWidth("30%");
+			btn2.setHeightFull();
+			btn2.setWidth("30%");
+			HorizontalLayout hz = new HorizontalLayout(btn1, btn2);
+			hz.setWidthFull();
+			hz.setAlignItems(Alignment.CENTER);
+
+			mainLayout.add(div, startAnchor, summary, hz);
+		} else {
+			mainLayout.add(div, startAnchor, summary);
+		}
 		mainLayout.setHorizontalComponentAlignment(Alignment.CENTER, startAnchor);
 	}
 	
@@ -286,7 +314,7 @@ public class Assessment extends ViewFrame implements HasUrlParameter<String> {
 	    return request.getRequestURL().toString();
 	}
 	
-	private Component createActivitySummary(Activity activity) {
+	private ApexCharts createActivitySummary(Activity activity) {
 		ApexCharts chart = new RadarChart(activity).build();
 		chart.setWidth("100%");
 		return chart;
