@@ -5,7 +5,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.frontend.installer.DefaultFileDownloader;
 import io.bssw.psip.backend.service.ActivityService;
 import io.bssw.psip.ui.MainLayout;
 import io.bssw.psip.ui.components.FlexBoxLayout;
@@ -44,7 +46,6 @@ public class Save extends ViewFrame implements HasUrlParameter<String> {
             Label label = new Label("Enter Markdown File name"); // We might actually want to just produce the file without bringing them to a save page.
             // Create the file
             // Make it available for download
-
             //mainLayout.addAndExpand(vrt);
         }
     }
