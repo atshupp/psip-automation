@@ -30,6 +30,8 @@
  *******************************************************************************/
 package io.bssw.psip.ui.views;
 
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.server.StreamResource;
 import org.vaadin.olli.FileDownloadWrapper;
 import com.vaadin.flow.component.button.Button;
@@ -156,18 +158,31 @@ public class Tracking extends ViewFrame  implements HasUrlParameter<String> {
 			HorizontalLayout hz1 = new HorizontalLayout(userStory, save);
 			hz1.setWidthFull();
 
+			IntegerField scoreField = new IntegerField("Score");
+			scoreField.setValue(0);
+			scoreField.setHasControls(true);
+			scoreField.setMin(0);
+			scoreField.setMax(5);
+			scoreField.setWidth("10%");
+			TextArea description = new TextArea("Description");
+			description.setWidth("45%");
+			TextArea addedValue = new TextArea("Added Value");
+			addedValue.setWidth("45%");
+			HorizontalLayout hz2 = new HorizontalLayout(scoreField, description, addedValue);
+			hz2.setWidthFull();
+
 			Button addGrade = new Button("+");
 			addGrade.setWidth("80%");
-			addGrade.getElement().addEventListener("click", e -> ptcSketch.add(new Button("Example")));
-			HorizontalLayout hz2 = new HorizontalLayout(addGrade);
-			hz2.setWidthFull();
+			addGrade.getElement().addEventListener("click", e -> ptcSketch.add(new Button(scoreField.getValue().toString() + ": " + description.getValue() + " | " + addedValue.getValue())));
+			HorizontalLayout hz3 = new HorizontalLayout(addGrade);
+			hz3.setWidthFull();
 
 			Button back = new Button("Back", backBtn -> MainLayout.navigate(Tracking.class, ""));
 			Button continueBtn = new Button("Continue", cntBtn -> MainLayout.navigate(Tracking.class, "Preview"));
-			HorizontalLayout hz3 = new HorizontalLayout(back, continueBtn);
+			HorizontalLayout hz4 = new HorizontalLayout(back, continueBtn);
 			hz3.setWidthFull();
 
-			VerticalLayout vrt = new VerticalLayout(hz1, hz2, ptcSketch, hz3);
+			VerticalLayout vrt = new VerticalLayout(hz1, hz2, hz3, ptcSketch, hz4);
 			vrt.setWidth("100%");
 			mainLayout.addAndExpand(vrt);
 		} else if(parameter.equals("Preview")) {

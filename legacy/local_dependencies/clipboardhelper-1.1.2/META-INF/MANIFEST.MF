@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Vaadin-Package-Version: 1
+Vaadin-Addon: clipboardhelper-1.1.2.jar
+Implementation-Vendor: Olli Tietäväinen
+Implementation-Title: ClipboardHelper
+Implementation-Version: 1.1.2
