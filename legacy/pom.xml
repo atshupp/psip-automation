@@ -2,7 +2,7 @@
     <distributionManagement>
         <repository>
             <id>public</id>
-            <url>https://nexus.web.sandia.gov/repository/maven-public/</url>
+            <url>https://nexus.web.sandia.gov/repository/maven-apache/</url>
         </repository>
     </distributionManagement><modelVersion>4.0.0</modelVersion>
     <groupId>io.bssw.psip</groupId>
@@ -71,16 +71,20 @@
         <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
         <pluginRepository>
             <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
+            <!-- Original -->
+            <!-- <url>https://repo.maven.apache.org/maven2</url> -->
+            <url>https://nexus.web.sandia.gov/repository/maven-public/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
         <pluginRepository>
             <id>vaadin-prereleases</id>
-            <url>
+            <!-- original -->
+            <!-- <url>
                 https://maven.vaadin.com/vaadin-prereleases/
-            </url>
+            </url> -->
+            <url>https://nexus.web.sandia.gov/repository/maven-vaadin/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
@@ -152,7 +156,12 @@
             <version>3.0.1</version>
         </dependency>
 
-
+        <!-- For java live reload. Addison-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

@@ -30,6 +30,8 @@
  *******************************************************************************/
 package io.bssw.psip.ui.views;
 
+import com.vaadin.flow.server.StreamResource;
+import org.vaadin.olli.FileDownloadWrapper;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Header;
 import com.vaadin.flow.component.html.Label;
@@ -60,6 +62,7 @@ import io.bssw.psip.ui.layout.size.Horizontal;
 import io.bssw.psip.ui.layout.size.Uniform;
 
 import java.awt.*;
+import java.io.ByteArrayInputStream;
 
 @SuppressWarnings("serial")
 @PageTitle("Tracking")
@@ -180,7 +183,11 @@ public class Tracking extends ViewFrame  implements HasUrlParameter<String> {
 
 			Button back = new Button("Back", backBtn -> MainLayout.navigate(Tracking.class, "PTCCreator"));
 			Button saveCard = new Button("Save PTC");
-			HorizontalLayout bot = new HorizontalLayout(back, saveCard);
+			FileDownloadWrapper buttonWrapper = new FileDownloadWrapper(
+					new StreamResource("foo.txt", () -> new ByteArrayInputStream("foo".getBytes())));
+			buttonWrapper.wrapComponent(saveCard);
+			saveCard.addClickListener(e -> buttonWrapper.wrapComponent(saveCard));
+			HorizontalLayout bot = new HorizontalLayout(back, buttonWrapper);
 			bot.setWidthFull();
 
 
